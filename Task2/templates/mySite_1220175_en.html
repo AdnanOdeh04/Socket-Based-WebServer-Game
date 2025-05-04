@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,36 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<header class="header">
-    <div>
-        <a href="./main_en.html" target="_blank">
-          <button class="btn liquid">Home</button>
-        </a>
-      </div>
-</header>
 <body>
-    <div class="contaner">
-        <div class="div_input">
-            <label for="">File type</label>
-            <select name="" id="" class="form-control">
-                <option value="" disabled selected>type</option>
-                <option value="male">image</option>
-                <option value="femal">video</option>
-            </select>
-            <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+    <header class="header">
+        <div>
+            <a href="./main_en.html" target="_blank">
+                <button class="btn liquid">Home</button>
+            </a>
         </div>
-        <form action="http://localhost:9926" method="POST">
-            <div class="div_input">
-                <label for="">File name</label>
-                <input type="text" name="filename">
-            </div>
-            <div class="div_input">
-                <button class="btn liquid">Request</button>
-             </div>
-        </form>
-    </div>
-</body>
-<footer>
+    </header>
+    
+    <form action="http://localhost:9926" method="POST">
+        <div class="div_input">
+            <label for="type">File type</label>
+            <select name="type" id="type" class="form-control" required>
+                <option value="" selected>Choose a type</option>
+                <option value="image">image</option>
+                <option value="video">video</option>
+            </select>
+        </div>
+    
+        <div class="div_input">
+            <label for="filename">File name</label>
+            <input type="text" name="filename" id="filename" required>
+        </div>
+    
+        <div class="div_input">
+            <button type="submit" class="btn liquid">Request</button>
+        </div>
+    </form>
 
-</footer>
+    <footer>
+        <!-- Footer content -->
+    </footer>
+</body>
 </html>
