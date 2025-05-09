@@ -1,0 +1,2 @@
+TCP_PORT = 6000
+SERVER_HOST = "localhost"
