@@ -17,11 +17,10 @@ def tcp_listener(sock):
             msg = sock.recv(1024).decode().strip()
             if not msg:
                 break
-            print("\n[TCP] " + msg)
             if "finish" in msg.lower():
-                print("Game End!\n")
+                print(msg)
                 sock.close()
-                os._exit(0)
+                exit(0)
         except:
             break
 def tcp_client_connection():
@@ -56,7 +55,6 @@ def tcp_client_connection():
                 print("1...")
 
                 listener_thread = threading.Thread(target=tcp_listener, args=(client_socket,))
-                listener_thread.daemon = True
                 listener_thread.start()
 
                 # UDP Game Guessing Loop
@@ -100,6 +98,5 @@ def tcp_client_connection():
             break
 
     client_socket.close()
-
 
 tcp_client_connection()

@@ -13,7 +13,7 @@ time_limit = 30  #Seconds
 game_duration = 60
 max_number = 100
 round_limit = 10
-
+game_over = False
 
 def game_setup(tcp_conn, tcp_add):
     winner = 0
@@ -22,6 +22,7 @@ def game_setup(tcp_conn, tcp_add):
     udp_connection.bind((SERVER_HOST, UDP_PORT))
     secret_guess = random.randint(1, 100)
     start_Game = time.time()
+    global game_over
     game_over = False
     while not game_over:
         if time.time() - start_Game > 60:
@@ -42,20 +43,22 @@ def game_setup(tcp_conn, tcp_add):
                 if Players[i] == add:
                     winner_name = i
                     break
-            for name, (tcp_conn, _) in Players.items():
-                try:
-                    tcp_conn.sendall("winner\r\n".encode())
-                    tcp_conn.sendall("We Have a correct Guess!\r\n".encode())
-                    tcp_conn.sendall(f"Game finished! {winner_name} is the winner!\r\n".encode())
-                    tcp_conn.sendall("finish\r\n".encode())
-                except Exception as e:
-                    print(f"Error sending to {name}: {e}")
-            game_over = True
-            break
+            try:
+                for connection in Players:
+                    Players[connection].sendall("winner\r\n".encode())
+                    Players[connection].sendall("We Have a correct Guess!\r\n".encode())
+                    Players[connection].sendall(f"Game finished! {winner_name} is the winner!\r\n".encode())
+                    Players[connection].sendall("finish\r\n".encode())
+                    game_over = True
+                break
+            except Exception as e:
+                print(e)
         elif guess < secret_guess:
             udp_connection.sendto("Higher!".encode(), add)
+
         else:
             udp_connection.sendto("Lower!".encode(), add)
+
 
 
 def accept_client(conn, add):
@@ -69,6 +72,7 @@ def accept_client(conn, add):
                 # with create_lock:
                 if username not in Players and len(Players) < Max_Player:
                     Players[username] = conn
+                    print(f"username: {username}, {conn}")
                     number_players = len(Players)
                     conn.sendall(f"Player with username {username} Added Successfully!\r\n".encode())
                     start_time = time.time()
@@ -78,7 +82,8 @@ def accept_client(conn, add):
                             if len(Players) > number_players:
                                 number_players = len(Players)
                                 start_time = time.time()
-                                conn.sendall(f"New Player With username {list(Players.keys())[-1]} Has Joined The Game!\r\n".encode())
+                                conn.sendall(
+                                    f"New Player With username {username} Has Joined The Game!\r\n".encode())
                                 conn.sendall(f"Waiting Time of {time_limit} to Start the Game.......\r\n".encode())
                                 continue
                     if len(Players) == 1:
@@ -95,7 +100,7 @@ def accept_client(conn, add):
                                     number_players = len(Players)
                                     start_time = time.time()
                                     conn.sendall(
-                                        f"New Player With username {list(Players.keys())[-1]} Has Joined The Game!\r\n".encode())
+                                        f"New Player With username {username} Has Joined The Game!\r\n".encode())
                                     conn.sendall(f"Waiting Time of {time_limit} to Start the Game.......\r\n".encode())
                                     continue
                     conn.sendall("StartingGame\r\n".encode())
