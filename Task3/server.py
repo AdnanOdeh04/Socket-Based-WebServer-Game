@@ -74,7 +74,7 @@ def accept_client(conn, add):
                     Players[username] = conn
                     print(f"username: {username}, {conn}")
                     number_players = len(Players)
-                    conn.sendall(f"Player with username {username} Added Successfully!\r\n".encode())
+                    conn.sendall(f"Player with username {list(Players.keys())[0]} Added Successfully!\r\n".encode())
                     start_time = time.time()
                     if Max_Player >= len(Players) >= Min_Player:
                         conn.sendall(f"Waiting Time of {time_limit} to Start the Game.......\r\n".encode())
@@ -83,7 +83,7 @@ def accept_client(conn, add):
                                 number_players = len(Players)
                                 start_time = time.time()
                                 conn.sendall(
-                                    f"New Player With username {username} Has Joined The Game!\r\n".encode())
+                                    f"New Player With username {list(Players.keys())[len(list(Players.keys()))-1]} Has Joined The Game!\r\n".encode())
                                 conn.sendall(f"Waiting Time of {time_limit} to Start the Game.......\r\n".encode())
                                 continue
                     if len(Players) == 1:
@@ -91,7 +91,7 @@ def accept_client(conn, add):
                         while len(Players) == 1:
                             continue
                         number_players = len(Players)
-                        conn.sendall(f"Player with username {username} Added Successfully!\r\n".encode())
+                        conn.sendall(f"Player with username {list(Players.keys())[len(list(Players.keys()))-1]} Added Successfully!\r\n".encode())
                         start_time = time.time()
                         if Max_Player >= len(Players) >= Min_Player:
                             conn.sendall(f"Waiting Time of {time_limit} to Start the Game.......\r\n".encode())
@@ -99,8 +99,9 @@ def accept_client(conn, add):
                                 if len(Players) > number_players:
                                     number_players = len(Players)
                                     start_time = time.time()
+                                    print(Players.keys())
                                     conn.sendall(
-                                        f"New Player With username {username} Has Joined The Game!\r\n".encode())
+                                        f"New Player With username {list(Players.keys())[len(list(Players.keys()))-1]} Has Joined The Game!\r\n".encode())
                                     conn.sendall(f"Waiting Time of {time_limit} to Start the Game.......\r\n".encode())
                                     continue
                     conn.sendall("StartingGame\r\n".encode())
