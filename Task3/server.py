@@ -44,13 +44,13 @@ def game_setup(tcp_conn, tcp_add):
                     winner_name = i
                     break
             try:
-                for connection in Players:
-                    Players[connection].sendall("winner\r\n".encode())
-                    Players[connection].sendall("We Have a correct Guess!\r\n".encode())
-                    Players[connection].sendall(f"Game finished! {winner_name} is the winner!\r\n".encode())
-                    Players[connection].sendall("finish\r\n".encode())
-                    game_over = True
-                break
+                
+                tcp_conn.sendall("winner\r\n".encode())
+                tcp_conn.sendall("We Have a correct Guess!\r\n".encode())
+                tcp_conn.sendall(f"Game finished! {winner_name} is the winner!\r\n".encode())
+                tcp_conn.sendall("finish\r\n".encode())
+                game_over = True
+                # break
             except Exception as e:
                 print(e)
         elif guess < secret_guess:
