@@ -1,7 +1,8 @@
 import socket
 import time
 import threading
-from config import SERVER_HOST, TCP_PORT
+from config import SERVER_HOST, TCP_PORT, UDP_PORT
+import random
 
 create_lock = threading.Lock()  #For safer threading (To avoid the race conditions)
 Max_Player = 4
@@ -9,6 +10,52 @@ Min_Player = 2
 Players = {}
 Player_Existance = 0
 time_limit = 30  #Seconds
+game_duration = 60
+max_number = 100
+round_limit = 10
+
+
+def game_setup(tcp_conn, tcp_add):
+    winner = 0
+    winner_name = ""
+    udp_connection = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    udp_connection.bind((SERVER_HOST, UDP_PORT))
+    secret_guess = random.randint(1, 100)
+    start_Game = time.time()
+    game_over = False
+    while not game_over:
+        if time.time() - start_Game > 60:
+            for i in Players:
+                udp_connection.sendto("Time's up! No one guessed correctly.".encode(), Players[i])
+                udp_connection.sendto("finish".encode(), Players[i])
+            break
+
+        data, add = udp_connection.recvfrom(1024)
+        number_guessed = data.decode().strip()
+        if not number_guessed.isdigit():
+            udp_connection.sendto("Invalid input".encode(), add)
+            continue
+        guess = int(number_guessed)
+        if guess == secret_guess:
+            udp_connection.sendto("Correct!".encode(), add)
+            for i in Players:
+                if Players[i] == add:
+                    winner_name = i
+                    break
+            for name, (tcp_conn, _) in Players.items():
+                try:
+                    tcp_conn.sendall("winner\r\n".encode())
+                    tcp_conn.sendall("We Have a correct Guess!\r\n".encode())
+                    tcp_conn.sendall(f"Game finished! {winner_name} is the winner!\r\n".encode())
+                    tcp_conn.sendall("finish\r\n".encode())
+                except Exception as e:
+                    print(f"Error sending to {name}: {e}")
+            game_over = True
+            break
+        elif guess < secret_guess:
+            udp_connection.sendto("Higher!".encode(), add)
+        else:
+            udp_connection.sendto("Lower!".encode(), add)
 
 
 def accept_client(conn, add):
@@ -25,7 +72,7 @@ def accept_client(conn, add):
                     number_players = len(Players)
                     conn.sendall(f"Player with username {username} Added Successfully!\r\n".encode())
                     start_time = time.time()
-                    if Max_Player > len(Players) > Min_Player:
+                    if Max_Player >= len(Players) >= Min_Player:
                         conn.sendall(f"Waiting Time of {time_limit} to Start the Game.......\r\n".encode())
                         while time.time() - start_time <= time_limit:
                             if len(Players) > number_players:
@@ -36,8 +83,23 @@ def accept_client(conn, add):
                                 continue
                     if len(Players) == 1:
                         conn.sendall(f"Minimum Players to Play the game is {Min_Player}\r\n".encode())
-                        continue
+                        while len(Players) == 1:
+                            continue
+                        number_players = len(Players)
+                        conn.sendall(f"Player with username {username} Added Successfully!\r\n".encode())
+                        start_time = time.time()
+                        if Max_Player >= len(Players) >= Min_Player:
+                            conn.sendall(f"Waiting Time of {time_limit} to Start the Game.......\r\n".encode())
+                            while time.time() - start_time <= time_limit:
+                                if len(Players) > number_players:
+                                    number_players = len(Players)
+                                    start_time = time.time()
+                                    conn.sendall(
+                                        f"New Player With username {list(Players.keys())[-1]} Has Joined The Game!\r\n".encode())
+                                    conn.sendall(f"Waiting Time of {time_limit} to Start the Game.......\r\n".encode())
+                                    continue
                     conn.sendall("StartingGame\r\n".encode())
+                    game_setup(conn, add)
                 else:
                     if username in Players:
                         conn.sendall("This username already taken!\r\n".encode())

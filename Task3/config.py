@@ -1,2 +1,3 @@
 TCP_PORT = 6000
+UDP_PORT = 6001
 SERVER_HOST = "localhost"
