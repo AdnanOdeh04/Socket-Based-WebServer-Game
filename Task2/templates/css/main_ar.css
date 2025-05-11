@@ -1,0 +1,235 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Georgia, serif;
+}
+.part1 {
+    margin-bottom: 150px;
+}
+.body{
+    background-image: url("../img/News Background.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: rgb(255, 255, 255);
+    font-family: Georgia, serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.header_text {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+
+}
+
+.header_text h1 {
+    color: red;
+}
+
+.header_text h2 {
+    color: blue; 
+}
+
+.theimage {
+    width: 135px;
+    height: 180px;
+    border-radius: 10px;
+}
+
+.teamInFo{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 50px;
+}
+.teamInFo p{
+    font-size: 50px;
+}
+
+.teme_member{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 80px;
+}
+.card{
+    width: 300px;
+    height: 300px;
+    background-color: #85a5d4;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    overflow: auto;
+    box-shadow: 6px 6px 20px rgba(255, 255, 255, 0.685);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.part2{
+    font-size: 25px;
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    box-sizing: border-box;
+    box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.2);
+    margin-left: 10px;
+}
+
+.introduction{
+    margin-bottom:50px ;
+}
+
+.topic{
+    font-size: 45px;
+}
+
+
+h5 {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.Bad-guys-type{
+    margin-left: 60px;
+    padding-bottom: 30px;
+}
+h6{
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.topic_img {
+    width: 100%;
+    max-width: 540px;
+    height: auto;
+    margin: 20px auto;
+    display: block;
+    border-radius: 10px;
+    border: 5px solid #ffffff;
+    box-shadow: 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+}
+
+.footer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    overflow: auto;
+}
+
+.externalLinks{
+    box-sizing: border-box;
+    box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+
+}
+
+
+.btn {
+    position: relative;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: none;
+    border: 2px solid #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    margin: 20px;
+  }
+  
+  .liquid {
+    background: linear-gradient(#fffefe 0 0) no-repeat calc(200% - var(--p, 0%))
+      100% / 200% var(--p, 0.2em);
+    transition: 0.3s var(--t, 0s),
+      background-position 0.3s calc(0.3s - var(--t, 0s));
+  }
+  
+  .liquid:hover {
+    --p: 100%;
+    --t: 0.3s;
+    color: #fff;
+  }
+  
+  body.dark-background {
+    color: #f0f0f0;
+}
+
+
+.header_text h1, .header_text h2 {
+    text-shadow: 2px 2px 4px rgba(255, 253, 253, 0.6);
+}
+
+.btn.liquid:hover {
+    background: linear-gradient(#ffffff 0 0) no-repeat calc(200% - var(--p, 0%)) 100% / 200% var(--p, 0.2em);
+    color: #000000;
+}
+
+.topic_card{
+    width: 500px;
+    height: 600px;
+    background-color: #85a5d4;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    overflow: auto;
+    box-shadow: 6px 6px 20px rgba(255, 255, 255, 0.685);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.info-card{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 80px;
+}
+
+.topic_card_1{
+    width: 500px;
+    height: 135px;
+    background-color: #85a5d4;
+    box-sizing: border-box;
+    display: flex;
+    box-shadow: 6px 6px 20px rgba(255, 255, 255, 0.685);
+    border-radius: 10px;
+    justify-content: center;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}

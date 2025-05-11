@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/supporting.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلب ملف</title>
+</head>
+<body>
+    <header class="header">
+        <div>
+            <form method="get" action="http://localhost:9926/main_ar.html">
+                <button class="btn liquid" type="submit">الرئيسية</button>
+            </form>
+        </div>
+    </header>
+
+    <div class="container">
+        <form id="requestForm" method="post" action="http://localhost:9926" target="_blank">
+            <div class="div_input">
+                <label for="filetype">نوع الملف</label>
+                <select name="filetype" id="filetype" class="form-control" required>
+                    <option value="" disabled selected>اختر النوع</option>
+                    <option value="image">صورة</option>
+                    <option value="video">فيديو</option>
+                </select>
+                <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+            </div>
+
+            <div class="div_input">
+                <label for="filename">اسم الملف</label>
+                <input type="text" name="filename" id="filename" placeholder="مثال: alaa.png" required>
+            </div>
+
+            <div class="div_input">
+                <button class="btn liquid" type="submit">طلب</button>
+            </div>
+        </form>
+    </div>
+</body>
+<footer>
+</footer>
+</html>
